@@ -19,6 +19,11 @@ config FDT_IPI_PLICSW
 	select IPI_PLICSW
 	default n
 
+config FDT_IPI_LOWRISC_PLICSW
+	bool "lowRISC PLICSW FDT driver"
+	select IPI_LOWRISC_PLICSW
+	default n
+
 endif
 
 config IPI_MSWI
@@ -27,6 +32,10 @@ config IPI_MSWI
 
 config IPI_PLICSW
 	bool "Andes PLICSW support"
+	default n
+
+config IPI_LOWRISC_PLICSW
+	bool "lowRISC PLICSW support"
 	default n
 
 endmenu

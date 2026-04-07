@@ -9,9 +9,13 @@
 
 libsbiutils-objs-$(CONFIG_IPI_MSWI) += ipi/aclint_mswi.o
 libsbiutils-objs-$(CONFIG_IPI_PLICSW) += ipi/andes_plicsw.o
+libsbiutils-objs-$(CONFIG_IPI_LOWRISC_PLICSW) += ipi/lowrisc_plicsw.o
 
 carray-fdt_early_drivers-$(CONFIG_FDT_IPI_MSWI) += fdt_ipi_mswi
 libsbiutils-objs-$(CONFIG_FDT_IPI_MSWI) += ipi/fdt_ipi_mswi.o
 
 carray-fdt_early_drivers-$(CONFIG_FDT_IPI_PLICSW) += fdt_ipi_plicsw
 libsbiutils-objs-$(CONFIG_FDT_IPI_PLICSW) += ipi/fdt_ipi_plicsw.o
+
+carray-fdt_ipi_drivers-$(CONFIG_FDT_IPI_LOWRISC_PLICSW) += fdt_ipi_lowrisc_plicsw
+libsbiutils-objs-$(CONFIG_FDT_IPI_LOWRISC_PLICSW) += ipi/fdt_ipi_lowrisc_plicsw.o
