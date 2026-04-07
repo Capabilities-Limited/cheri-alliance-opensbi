@@ -97,6 +97,7 @@ static const struct fdt_match irqchip_plic_match[] = {
 	{ .compatible = "andestech,nceplic100" },
 	{ .compatible = "riscv,plic0" },
 	{ .compatible = "sifive,plic-1.0.0" },
+	{ .compatible = "lowrisc,opentitan-plic" },
 	{ .compatible = "thead,c900-plic",
 	  .data = (void *)(PLIC_FLAG_THEAD_DELEGATION | PLIC_FLAG_ENABLE_PM) },
 	{ /* sentinel */ }
