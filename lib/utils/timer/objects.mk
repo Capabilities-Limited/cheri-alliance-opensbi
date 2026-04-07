@@ -7,11 +7,15 @@
 #   Anup Patel <anup.patel@wdc.com>
 #
 
+libsbiutils-objs-$(CONFIG_TIMER_LOWRISC_RVTIMER) += timer/lowrisc_rvtimer.o
 libsbiutils-objs-$(CONFIG_TIMER_MTIMER) += timer/aclint_mtimer.o
 libsbiutils-objs-$(CONFIG_TIMER_PLMT) += timer/andes_plmt.o
 
 libsbiutils-objs-$(CONFIG_FDT_TIMER) += timer/fdt_timer.o
 libsbiutils-objs-$(CONFIG_FDT_TIMER) += timer/fdt_timer_drivers.carray.o
+
+carray-fdt_timer_drivers-$(CONFIG_FDT_TIMER_LOWRISC_RVTIMER) += fdt_lowrisc_rvtimer
+libsbiutils-objs-$(CONFIG_FDT_TIMER_LOWRISC_RVTIMER) += timer/fdt_lowrisc_rvtimer.o
 
 carray-fdt_timer_drivers-$(CONFIG_FDT_TIMER_MTIMER) += fdt_timer_mtimer
 libsbiutils-objs-$(CONFIG_FDT_TIMER_MTIMER) += timer/fdt_timer_mtimer.o

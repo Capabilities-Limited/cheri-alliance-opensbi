@@ -106,6 +106,10 @@ int fdt_parse_aclint_node(const void *fdt, int nodeoffset,
 int fdt_parse_plmt_node(const void *fdt, int nodeoffset, unsigned long *plmt_base,
 			unsigned long *plmt_size, u32 *hart_count);
 
+int fdt_parse_lowrisc_rvtimer_node(void *fdt, int nodeoffset,
+				   unsigned long *rvtimer_base,
+				   unsigned long *rvtimer_size, u32 *hart_count);
+
 int fdt_parse_plicsw_node(const void *fdt, int nodeoffset, unsigned long *plicsw_base,
 			  unsigned long *size, u32 *hart_count);
 

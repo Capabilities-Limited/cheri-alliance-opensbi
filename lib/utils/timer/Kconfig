@@ -9,6 +9,11 @@ config FDT_TIMER
 
 if FDT_TIMER
 
+config FDT_TIMER_LOWRISC_RVTIMER
+	bool "lowRISC RV Timer FDT driver"
+	select TIMER_LOWRISC_RVTIMER
+	default n
+
 config FDT_TIMER_MTIMER
 	bool "ACLINT MTIMER FDT driver"
 	select TIMER_MTIMER
@@ -20,6 +25,10 @@ config FDT_TIMER_PLMT
 	default n
 
 endif
+
+config TIMER_LOWRISC_RVTIMER
+	bool "lowRISC RV Timer support"
+	default n
 
 config TIMER_MTIMER
 	bool "ACLINT MTIMER support"
