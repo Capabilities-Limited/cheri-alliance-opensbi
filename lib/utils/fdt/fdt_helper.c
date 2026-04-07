@@ -34,6 +34,51 @@
 #define DEFAULT_SHAKTI_UART_FREQ		50000000
 #define DEFAULT_SHAKTI_UART_BAUD		115200
 
+#define DEFAULT_LOWRISC_UART_FREQ		50000000
+#define DEFAULT_LOWRISC_UART_BAUD		1000000
+
+const struct fdt_match *fdt_match_node(void *fdt, int nodeoff,
+				       const struct fdt_match *match_table)
+{
+	int ret;
+
+	if (!fdt || nodeoff < 0 || !match_table)
+		return NULL;
+
+	while (match_table->compatible) {
+		ret = fdt_node_check_compatible(fdt, nodeoff,
+						match_table->compatible);
+		if (!ret)
+			return match_table;
+		match_table++;
+	}
+
+	return NULL;
+}
+
+int fdt_find_match(void *fdt, int startoff,
+		   const struct fdt_match *match_table,
+		   const struct fdt_match **out_match)
+{
+	int nodeoff;
+
+	if (!fdt || !match_table)
+		return SBI_ENODEV;
+
+	while (match_table->compatible) {
+		nodeoff = fdt_node_offset_by_compatible(fdt, startoff,
+						match_table->compatible);
+		if (nodeoff >= 0) {
+			if (out_match)
+				*out_match = match_table;
+			return nodeoff;
+		}
+		match_table++;
+	}
+
+	return SBI_ENODEV;
+}
+
 int fdt_parse_phandle_with_args(const void *fdt, int nodeoff,
 				const char *prop, const char *cells_prop,
 				int index, struct fdt_phandle_args *out_args)
@@ -558,7 +603,19 @@ int fdt_parse_sifive_uart_node(const void *fdt, int nodeoffset,
 					DEFAULT_SIFIVE_UART_BAUD);
 }
 
+<<<<<<< HEAD
 int fdt_parse_uart_node(const void *fdt, int nodeoffset,
+=======
+int fdt_parse_lowrisc_ot_uart_node(void *fdt, int nodeoffset,
+				   struct platform_uart_data *uart)
+{
+	return fdt_parse_uart_node_common(fdt, nodeoffset, uart,
+					DEFAULT_LOWRISC_UART_FREQ,
+					DEFAULT_LOWRISC_UART_BAUD);
+}
+
+int fdt_parse_uart_node(void *fdt, int nodeoffset,
+>>>>>>> 0567a5f5 (add Opentitan UART serial driver)
 			struct platform_uart_data *uart)
 {
 	int len, rc;

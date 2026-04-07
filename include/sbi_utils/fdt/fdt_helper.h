@@ -72,6 +72,9 @@ int fdt_parse_sifive_uart_node(const void *fdt, int nodeoffset,
 int fdt_parse_uart_node(const void *fdt, int nodeoffset,
 			struct platform_uart_data *uart);
 
+int fdt_parse_lowrisc_ot_uart_node(void *fdt, int nodeoffset,
+				   struct platform_uart_data *uart);
+
 int fdt_parse_uart8250(const void *fdt, struct platform_uart_data *uart,
 		       const char *compatible);
 
