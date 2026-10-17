@@ -129,7 +129,11 @@ cheri_cap_init:
 	/* Only seal the function whcih is not used for exception handler */
 	lly	t6, _start_hang
 	beq		t5, t6, 9f
+#if defined(__riscv_y) && __riscv_y >= 910000
+	yseale	t5, t5
+#else
 	ysentry	t5, t5
+#endif
 9:
 	sy	t5, 0(t3)
 10:

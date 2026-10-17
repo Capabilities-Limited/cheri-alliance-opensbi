@@ -359,6 +359,17 @@ static int printcap(char **out, u32 *out_len, uintptr_t cap,
 		*s++ = 'E';
 	else
 		*s++ = '-';
+#elif defined(__riscv_zylg)
+	if (perm & (CHERI_PERM_STORE_LOCAL))
+		*s++ = 'S';
+	else
+		*s++ = '-';
+
+	/* XXX: This letter doesn't make sense any more */
+	if (perm & (CHERI_PERM_LOAD_GLOBAL))
+		*s++ = 'E';
+	else
+		*s++ = '-';
 #else /* !defined(__riscv_zcherilevels) && !defined(__riscv_zylevels1b) */
 	/* Print placeholder for non-zcherilevels */
 	*s++ = '-';
