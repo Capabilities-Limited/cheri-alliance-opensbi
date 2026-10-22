@@ -8,13 +8,13 @@
  */
 
 #include <sbi/riscv_io.h>
+#include <sbi_utils/fdt/fdt_driver.h>
 #include <sbi_utils/fdt/fdt_helper.h>
-#include <sbi_utils/ipi/fdt_ipi.h>
 #include <sbi_utils/ipi/lowrisc_plicsw.h>
 
 extern struct lowrisc_plicsw_data lr_plicsw;
 
-int fdt_lowrisc_plicsw_cold_ipi_init(void *fdt, int nodeoff,
+int fdt_lowrisc_plicsw_cold_ipi_init(const void *fdt, int nodeoff,
 				     const struct fdt_match *match)
 {
 	int rc;
@@ -39,9 +39,7 @@ static const struct fdt_match ipi_lowrisc_plicsw_match[] = {
 	{},
 };
 
-struct fdt_ipi fdt_ipi_lowrisc_plicsw = {
+struct fdt_driver fdt_ipi_lowrisc_plicsw = {
 	.match_table = ipi_lowrisc_plicsw_match,
-	.cold_init   = fdt_lowrisc_plicsw_cold_ipi_init,
-	.warm_init   = lowrisc_plicsw_warm_ipi_init,
-	.exit	     = NULL,
+	.init   = fdt_lowrisc_plicsw_cold_ipi_init,
 };

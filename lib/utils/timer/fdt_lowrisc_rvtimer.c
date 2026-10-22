@@ -14,7 +14,7 @@
 
 extern struct lowrisc_rvtimer_data lr_timer;
 
-static int fdt_lowrisc_rvtimer_cold_timer_init(void *fdt, int nodeoff,
+static int fdt_lowrisc_rvtimer_cold_timer_init(const void *fdt, int nodeoff,
 					       const struct fdt_match *match)
 {
 	int rc;
@@ -43,9 +43,7 @@ static const struct fdt_match timer_lowrisc_rvtimer_match[] = {
 	{},
 };
 
-struct fdt_timer fdt_lowrisc_rvtimer = {
+struct fdt_driver fdt_lowrisc_rvtimer = {
 	.match_table = timer_lowrisc_rvtimer_match,
-	.cold_init   = fdt_lowrisc_rvtimer_cold_timer_init,
-	.warm_init   = lowrisc_rvtimer_warm_timer_init,
-	.exit	     = NULL,
+	.init   = fdt_lowrisc_rvtimer_cold_timer_init,
 };

@@ -13,7 +13,7 @@
 #include <sbi_utils/serial/lowrisc-ot-uart.h>
 #include <sbi/riscv_io.h>
 
-static int serial_lowrisc_init(void *fdt, int nodeoff,
+static int serial_lowrisc_init(const void *fdt, int nodeoff,
 			       const struct fdt_match *match)
 {
 	int rc;
@@ -41,7 +41,7 @@ static const struct fdt_match serial_lowrisc_match[] = {
 	{ },
 };
 
-struct fdt_serial fdt_serial_lowrisc = {
+struct fdt_driver fdt_serial_lowrisc = {
 	.match_table = serial_lowrisc_match,
 	.init = serial_lowrisc_init,
 };

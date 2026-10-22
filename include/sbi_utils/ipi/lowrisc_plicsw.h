@@ -18,8 +18,6 @@ struct lowrisc_plicsw_data {
 	uint32_t hart_count;
 };
 
-int lowrisc_plicsw_warm_ipi_init(void);
-
 int lowrisc_plicsw_cold_ipi_init(struct lowrisc_plicsw_data *lr_plicsw);
 
 #endif /* _IPI_LOWRISC_PLICSW_H_ */

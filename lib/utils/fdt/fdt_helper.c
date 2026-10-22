@@ -603,7 +603,7 @@ int fdt_parse_sifive_uart_node(const void *fdt, int nodeoffset,
 					DEFAULT_SIFIVE_UART_BAUD);
 }
 
-int fdt_parse_lowrisc_ot_uart_node(void *fdt, int nodeoffset,
+int fdt_parse_lowrisc_ot_uart_node(const void *fdt, int nodeoffset,
 				   struct platform_uart_data *uart)
 {
 	return fdt_parse_uart_node_common(fdt, nodeoffset, uart,
@@ -1144,7 +1144,7 @@ int fdt_parse_plmt_node(const void *fdt, int nodeoffset, unsigned long *plmt_bas
 	return 0;
 }
 
-int fdt_parse_lowrisc_rvtimer_node(void *fdt, int nodeoffset,
+int fdt_parse_lowrisc_rvtimer_node(const void *fdt, int nodeoffset,
 				   unsigned long *rvtimer_base,
 				   unsigned long *rvtimer_size, u32 *hart_count)
 {
