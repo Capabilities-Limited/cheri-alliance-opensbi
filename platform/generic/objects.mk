@@ -24,6 +24,11 @@ platform-objs-y += platform_override_modules.carray.o
 # Blobs to build
 FW_DYNAMIC=y
 FW_JUMP=y
+
+ifeq ($(CONFIG_SBI_ECALL_YC),y)
+FW_COMPARTMENT=y
+endif
+
 ifeq ($(PLATFORM_RISCV_XLEN), 32)
   # This needs to be 4MB aligned for 32-bit system
   FW_JUMP_OFFSET=0x400000

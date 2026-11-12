@@ -39,6 +39,12 @@
 #define SBI_EXT_FWFT				0x46574654
 #define SBI_EXT_MPXY				0x4D505859
 
+/*
+ * Experimental extension for RVY (CHERI) compartmentalisation (YC). It takes
+ * the last ID of the experimental extension space (0x08000000-0x08FFFFFF).
+ */
+#define SBI_EXT_YC				0x08FFFFFF
+
 /* SBI function IDs for BASE extension*/
 #define SBI_EXT_BASE_GET_SPEC_VERSION		0x0
 #define SBI_EXT_BASE_GET_IMP_ID			0x1
@@ -125,6 +131,13 @@
 /* SBI function IDs for FW feature extension */
 #define SBI_EXT_FWFT_SET		0x0
 #define SBI_EXT_FWFT_GET		0x1
+
+/* SBI function IDs for YC extension */
+#define SBI_EXT_YC_INIT			0x0
+#define SBI_EXT_YC_ENTER		0x1
+#define SBI_EXT_YC_STOP			0x2
+#define SBI_EXT_YC_RESUME		0x3
+#define SBI_EXT_YC_DISABLE		0x4
 
 enum sbi_fwft_feature_t {
 	SBI_FWFT_MISALIGNED_EXC_DELEG		= 0x0,

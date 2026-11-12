@@ -12,3 +12,4 @@ $(platform_build_dir)/firmware/fw_jump.o: $(FW_FDT_PATH)
 $(platform_build_dir)/firmware/fw_payload.o: $(FW_FDT_PATH)
 
 $(platform_build_dir)/firmware/fw_payload.o: $(FW_PAYLOAD_PATH_FINAL)
+$(platform_build_dir)/firmware/fw_compartment.o: $(FW_COMPARTMENT0_PATH_FINAL) $(FW_COMPARTMENT1_PATH_FINAL)
