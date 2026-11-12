@@ -69,4 +69,18 @@ config SBI_ECALL_SSE
 config SBI_ECALL_MPXY
 	bool "MPXY extension"
 	default y
+
+config SBI_ECALL_YC
+	bool "YC (RVY CHERI compartmentalisation) extension"
+	default y
+
+config SBI_YC_SUPPORT_FPU
+	bool "Save and restore the FPU state of each compartment"
+	depends on SBI_ECALL_YC
+	default y
+
+config SBI_YC_SUPPORT_RVV
+	bool "Save and restore the vector (RVV) state of each compartment"
+	depends on SBI_ECALL_YC
+	default n
 endmenu

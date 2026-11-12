@@ -12,6 +12,10 @@
 
 #include <sbi/riscv_asm.h>
 
+#if defined(CONFIG_SBI_ECALL_YC)
+#include <sbi/sbi_yc_offsets.h>
+#endif
+
 /* clang-format off */
 
 /** Offset of fw_start member in sbi_scratch */
@@ -47,8 +51,23 @@
 #define SBI_SCRATCH_OPTIONS_OFFSET		(6 * __SIZEOF_LONG__ + 8 * __SIZEOF_POINTER__)
 /** Offset of hartindex member in sbi_scratch */
 #define SBI_SCRATCH_HARTINDEX_OFFSET	(7 * __SIZEOF_LONG__ + 8 * __SIZEOF_POINTER__)
+#if defined(CONFIG_SBI_ECALL_YC)
+/** Offset of ycntxt member in sbi_scratch */
+#define SBI_SCRATCH_YC_CONTEXT_OFFSET		(8 * __SIZEOF_LONG__ + 8 * __SIZEOF_POINTER__)
+/** Offset of extra space in sbi_scratch */
+#if defined(CONFIG_SBI_YC_SUPPORT_FPU)
+#define SBI_SCRATCH_EXTRA_SPACE_OFFSET		\
+	YC_COMP_ALIGN_UP(SBI_SCRATCH_YC_CONTEXT_OFFSET + \
+			 YC_OPENSBI_CONTEXT_SIZE, __SIZEOF_POINTER__)
+#else
+#define SBI_SCRATCH_EXTRA_SPACE_OFFSET		\
+	YC_COMP_ALIGN_UP(SBI_SCRATCH_YC_CONTEXT_OFFSET + \
+			 21 * __SIZEOF_POINTER__, __SIZEOF_POINTER__)
+#endif
+#else
 /** Offset of extra space in sbi_scratch */
 #define SBI_SCRATCH_EXTRA_SPACE_OFFSET		(8 * __SIZEOF_LONG__ + 8 * __SIZEOF_POINTER__)
+#endif
 #else
 /** Offset of options member in sbi_scratch */
 #define SBI_SCRATCH_OPTIONS_OFFSET		(6 * __SIZEOF_LONG__ + 7 * __SIZEOF_POINTER__)
@@ -65,6 +84,20 @@
 #ifndef __ASSEMBLER__
 
 #include <sbi/sbi_types.h>
+
+/*
+ * OpenSBI's context while a compartment runs. The layout must match
+ * OPENSBI_YC_SAVE_CONTEXT and OPENSBI_YC_LOAD_CONTEXT. uintptr_t makes the
+ * slots capability-sized on CHERI.
+ */
+struct sbi_yc_opensbi_context {
+	uintptr_t current_compartment;
+	uintptr_t regs[20];
+#if defined(CONFIG_SBI_YC_SUPPORT_FPU)
+	unsigned long fpr[32];
+	unsigned long fcsr;
+#endif
+};
 
 /** Representation of per-HART scratch space */
 struct sbi_scratch {
@@ -102,6 +135,10 @@ struct sbi_scratch {
 	unsigned long options;
 	/** Index of the hart */
 	unsigned long hartindex;
+#if defined(CONFIG_SBI_ECALL_YC)
+	/** OpenSBI context saved while a compartment runs */
+	struct sbi_yc_opensbi_context ycntxt;
+#endif /* CONFIG_SBI_ECALL_YC */
 };
 
 /**
@@ -126,6 +163,14 @@ assert_member_offset(struct sbi_scratch, stack, SBI_SCRATCH_STACK_OFFSET);
 #endif
 assert_member_offset(struct sbi_scratch, options, SBI_SCRATCH_OPTIONS_OFFSET);
 assert_member_offset(struct sbi_scratch, hartindex, SBI_SCRATCH_HARTINDEX_OFFSET);
+
+#if defined(CONFIG_SBI_ECALL_YC)
+assert_member_offset(struct sbi_scratch, ycntxt, SBI_SCRATCH_YC_CONTEXT_OFFSET);
+#if defined(CONFIG_SBI_YC_SUPPORT_FPU)
+assert_member_offset(struct sbi_yc_opensbi_context, fpr, YC_OPENSBI_CONTEXT_FP_BASE);
+assert_member_offset(struct sbi_yc_opensbi_context, fcsr, YC_OPENSBI_CONTEXT_FCSR);
+#endif /* CONFIG_SBI_YC_SUPPORT_FPU */
+#endif /* CONFIG_SBI_ECALL_YC */
 
 /** Possible options for OpenSBI library */
 enum sbi_scratch_options {
