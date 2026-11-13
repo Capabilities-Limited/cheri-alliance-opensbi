@@ -347,6 +347,8 @@ Detailed documentation of various aspects of OpenSBI can be found under the
   examples build supported by OpenSBI.
 * [Domain Support]: Documentation for the OpenSBI domain support which helps
   users achieve system-level partitioning using OpenSBI.
+* [YC Compartmentalisation]: Documentation for the YC extension which runs
+  CHERI-confined compartments embedded in the firmware.
 
 OpenSBI source code is also well documented. For source level documentation,
 doxygen style is used. Please refer to the [Doxygen manual] for details on this
@@ -401,6 +403,7 @@ make I=<install_directory> install_docs
 [Platform Documentation]: docs/platform/platform.md
 [Firmware Documentation]: docs/firmware/fw.md
 [Domain Support]: docs/domain_support.md
+[YC Compartmentalisation]: docs/yc_support.md
 [Doxygen manual]: http://www.doxygen.nl/manual/index.html
 [Kendryte standalone SDK]: https://github.com/kendryte/kendryte-standalone-sdk
 [third party notices]: ThirdPartyNotices.md
